@@ -22,14 +22,10 @@ const data = [
 
 const columns = [
   columnHelper.accessor("id", {
-    header: "ID ",
+    header: "ID",
   }),
-  columnHelper.accessor("name", {
-    header: "NAME",
-  }),
-  columnHelper.accessor("age", {
-    header: "AGE",
-  }),
+  { accessorKey: "name", header: "NAME" },
+  { accessorKey: "age", header: "AGE" },
 ];
 
 export default function Home() {
@@ -37,6 +33,7 @@ export default function Home() {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: true,
   });
 
   return (
@@ -63,6 +60,17 @@ export default function Home() {
               </tr>
             ))}
           </thead>
+          <tbody>
+            {tableInstance.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </main>
