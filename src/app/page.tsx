@@ -4,9 +4,12 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  createColumnHelper,
 } from "@tanstack/react-table";
 
 type TData = { id: number; name: string; age: number };
+
+const columnHelper = createColumnHelper();
 
 const data = [
   { id: 1, name: "kim", age: 29 },
@@ -18,9 +21,15 @@ const data = [
 ];
 
 const columns = [
-  { header: "ID", accessorKey: "id" },
-  { header: "Name", accessorKey: "name" },
-  { header: "Age", accessorKey: "age" },
+  columnHelper.accessor("id", {
+    header: "ID ",
+  }),
+  columnHelper.accessor("name", {
+    header: "NAME",
+  }),
+  columnHelper.accessor("age", {
+    header: "AGE",
+  }),
 ];
 
 export default function Home() {
@@ -43,7 +52,7 @@ export default function Home() {
                   //   header.getContext(),
                   // );
                   return (
-                    <th key={header.id}>
+                    <th key={header.id} colSpan={header.colSpan}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
